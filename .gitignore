@@ -1,0 +1,10 @@
+/reports
+.env
+/env
+/.venv
+/venv
+/.idea
+/__pycache__
+/handlers/__pycache__
+/DB/__pycache__
+
