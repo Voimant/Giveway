@@ -67,7 +67,7 @@ async def start_handler(mess: Message, bot: Bot, state: FSMContext):
 
 
 
-        await mess.answer('Приветственное сообщение, жду информаицию')
+        await mess.answer('🎉 GIVEAWAY STARTING 🎉')
 
 
 # -----------------Отчет по всем группам
