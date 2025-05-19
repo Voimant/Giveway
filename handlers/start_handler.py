@@ -61,13 +61,10 @@ async def start_handler(mess: Message, bot: Bot, state: FSMContext):
                     name = mess.from_user.full_name
                     username = mess.from_user.username
                     db_insert_new_user(user_id, username, name, int(chat))
-
+                    await mess.answer('🎉 GIVEAWAY STARTING 🎉')
+                    break
             except TelegramAPIError as e:
                 logging.info(f"Ошибка при проверке участников канала: {e}")
-
-
-
-        await mess.answer('🎉 GIVEAWAY STARTING 🎉')
 
 
 # -----------------Отчет по всем группам
