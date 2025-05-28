@@ -6,7 +6,8 @@ from DB.db_func import db_select_all_group, db_select_group
 
 admin_button = [[InlineKeyboardButton(text='Скачать всю базу', callback_data='all_base')],
                 [InlineKeyboardButton(text='Скачать базу по группам', callback_data='one_group')],
-                [InlineKeyboardButton(text='Рассылка', callback_data='send_message_on_base')]
+                [InlineKeyboardButton(text='Рассылка', callback_data='send_message_on_base')],
+                [InlineKeyboardButton(text='Удалить группы', callback_data='dell_group')]
                 ]
 
 
@@ -37,7 +38,7 @@ def group_builder():
     builder.adjust(1)
     return builder.as_markup()
 
-
+#--------------------------генератор клавиатур группы
 def group_builder_1():
     group_list = db_select_group()
     builder = InlineKeyboardBuilder()

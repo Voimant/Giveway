@@ -88,3 +88,15 @@ def export_one_csv(id_group):
     file = pd.read_sql(select_query, conn)
     file.to_excel(f'reports/{str(new_name)}.xlsx', index=False)
     return 'отчет загружен exel'
+
+
+
+#---------------Удаляем группу
+
+def db_delete_group_users(group_id):
+    with conn.cursor() as cur:
+        delete_query_2 = "delete from users where group_id = %s"
+        cur.execute(delete_query_2, (group_id, ))
+        delete_query_1 = "delete from groups where groups_id = %s"
+        cur.execute(delete_query_1, (group_id, ))
+        conn.commit()

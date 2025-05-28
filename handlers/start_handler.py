@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 import os
 
 from DB.db_func import db_insert_new_group, db_select_all_group, db_insert_new_user, export_csv, db_select_name_group, \
-    export_one_csv, db_select_users_in_group
+    export_one_csv, db_select_users_in_group, db_delete_group_users
 from keyboards import admin_markup, group_builder, cancel_markup, skip_markup, group_builder_1, send_cancel
 
 router = Router()
@@ -180,4 +180,20 @@ async def send_mess(call: CallbackQuery, state: FSMContext, bot: Bot):
 
 
 
+#----------------------------------Логика удаления групп
+class FsmDeleteGroup(StatesGroup):
+    group = State()
 
+@router.callback_query(F.data == 'dell_group')
+async def get_delete_group(call: CallbackQuery, state: FSMContext):
+    await state.clear()
+    await call.message.answer('Выберете группу для удаления из списка', reply_markup=group_builder_1())
+    await state.set_state(FsmDeleteGroup.group)
+
+
+@router.callback_query(FsmDeleteGroup.group)
+async def get_go_delete(call: CallbackQuery, state: FSMContext, bot: Bot):
+    await bot.leave_chat(int(call.data))
+    db_delete_group_users(int(call.data))
+    await state.set_state(FsmDeleteGroup.group)
+    await call.message.answer('Группа и пользователи удалены, можете удалить еще одну группу или нажать Отмена', reply_markup=group_builder_1())
